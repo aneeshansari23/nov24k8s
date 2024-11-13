@@ -1,523 +1,11 @@
-  503  kubectl get pod
-  504  kubectl delete -f rc.yaml 
-  505  vi res-pod.yaml 
-  506  kubectl create -f res-pod.yaml 
-  507  kubectl get pods
-  508  kubectl get pods --show-labels 
-  509  cp rc.yaml rs.yaml
-  510  vi rs.yaml 
-  511  kubectl api-versions 
-  512  kubectl explain api-versions apps/v1
-  513  kubectl explain api-versions 
-  514  kubectl explain pods
-  515  vi rs.yaml 
-  516  kubectl create -f rs.yaml 
-  517  kubectl  get rs
-  518  kubectl  get pods
-  519  kubectl  get pods --show-labels 
-  520  vi rs.yaml 
-  521  kubectl scale replicaset myrs --replicas 8
-  522  kubectl  get pods --show-labels 
-  523  kubectl scale replicaset myrs --replicas 2
-  524  kubectl  get pods --show-labels 
-  525  vi rs.yaml 
-  526  kubectl edit rs myrs 
-  527  kubectl  get pods
-  528  vi rs.yaml 
-  529  kubectl  get pods --show-labels 
-  530  vi rs.yaml 
-  531  kubectl delete -f rs.yaml 
-  532  vi rs.yaml 
-  533  kubectl create -f rs.yaml 
-  534  vi rs.yaml 
-  535  kubectl create -f rs.yaml 
-  536  kubectl get pds
-  537  kubectl get pods
-  538  kubectl get pods --show-labels 
-  539  vi rs.yaml 
-  540  #kubectl run test1 --image nginx:latest --labels app=myapp
-  541  kubectl delete -f rs.yaml 
-  542  kubectl get pods
-  543  kubectl run test1 --image nginx:latest --labels app=myapp
-  544  kubectl run test2 --image nginx:latest --labels app=myapp
-  545  kubectl run test3 --image nginx:latest --labels app=myapp
-  546  kubectl get pod --show-labels 
-  547  vi rs.yaml 
-  548  kubectl create -f rs.yaml 
-  549  kubectl get rs
-  550  kubectl get pod
-  551  vi rs.yaml 
-  552  kubectl delete pod test1
-  553  kubectl get pod
-  554  kubectl delete pod test2
-  555  kubectl get pod
-  556  kubectl delete pod test3
-  557  kubectl get pod
-  558  kubectl expose rs myrs --type NodePort --port 80
-  559  vi service.yaml 
-  560  cp service.yaml svc-rs.yaml
-  561  vi rs.yaml 
-  562  vi svc-rs.yaml 
-  563  kubectl create -f svc-rs.yaml 
-  564  kubectl get svc
-  565  vi svc-rs.yaml 
-  566  vi rs.yaml 
-  567  kubectl delete -f rs.yaml -f svc-rs.yaml 
-  568  kubectl get all
-  569  kubectl delete svc mysql-svc 
-  570  kubectl get all
-  571  vi rs.yaml 
-  572  kubectl create -f rs.yaml 
-  573  kubectl expose rs myrs --type NodePort --port 80 
-  574  kubectl expose rs myrs --type NodePort --port 80 --selector app=myapp
-  575  kubectl get svc
-  576  kubectl describe svc myrs 
-  577  init 0
-  578  cd myapp/
-  579  cp rc.yaml deployment.yaml
-  580  vi deployment.yaml 
-  581  kubectl get pods
-  582  kubectl delete -f rs.yaml 
-  583  kubectl get svc
-  584  kubectl delete svc myrs 
-  585  vi service.yaml 
-  586  vi deployment.yaml 
-  587  kubectl create -f deployment.yaml 
-  588  vi deployment.yaml 
-  589  kubectl get deployments.apps 
-  590  kubectl get deployments.apps -o wide
-  591  kubectl get pods
-  592  kubectl get rs
-  593  kubectl get deployments.apps 
-  594  kubectl describe deployments.apps mydep 
-  595  kubectl rollout history deployment mydep 
-  596  kubectl describe deployments.apps mydep 
-  597  kubectl rollout history deployment mydep 
-  598  kubectl annotate deployments.apps mydep kubernetes.io/change-cause="initial deployment v1"
-  599  kubectl rollout history deployment mydep 
-  600  kubectl describe deployments.apps mydep 
-  601  kubectl get deployments.apps -o wide
-  602  kubectl get deployments
-  603  kubectl get deployment
-  604  kubectl get deploy
-  605  vi deployment.yaml 
-  606  kubectl get deployments.apps -o wide
-  607  kubectl set image deployment mydep con1=httpd:latest 
-  608  kubectl get rs
-  609  kubectl get pods
-  610  kubectl get rs
-  611  kubectl rollout history deployment mydep 
-  612  kubectl annotate deployments.apps mydep kubernetes.io/change-cause="updating to v2 httpd:latest"
-  613  kubectl rollout history deployment mydep 
-  614  kubectl get rs
-  615  kubectl get pods
-  616  kubectl rollout history deployment mydep 
-  617  kubectl rollout history deployment --revision 2
-  618  kubectl rollout undo deployment mydep --to-revision 
-  619  kubectl rollout history deployment mydep 
-  620  kubectl rollout undo deployment mydep --to-revision 1
-  621  kubectl get rs
-  622  kubectl get pods
-  623  kubectl rollout history deployment mydep 
-  624  kubectl set image deployment mydep con1=966145/myserver121:latest 
-  625  kubectl rollout history deployment mydep 
-  626  kubectl annotate deployments.apps mydep kubernetes.io/change-cause="updating to app "
-  627  kubectl rollout history deployment --revision 4
-  628  kubectl get rs
-  629  kubectl get pod
-  630  kubectl rollout history deployment mydep 
-  631  kubectl rollout history deployment --revision 3
-  632  kubectl rollout undo deployment mydep --to-revision 3
-  633  kubectl get rs
-  634  kubectl get pds
-  635  kubectl get pods
-  636  history 
-  637  vi deployment.yaml 
-  638  kubectl rollout history deployment 
-  639  kubectl rollout history deployment --revision 4
-  640  kubectl delete -f deployment.yaml 
-  641  kubectl get pods
-  642  kubectl get deployments.apps 
-  643  kubectl get svc
-  644  cp rc.yaml daemonset.yaml
-  645  vi daemonset.yaml 
-  646  kubectl create -f daemonset.yaml 
-  647  kubectl get daemonsets.apps 
-  648  kubectl get pods 
-  649  kubectl get pods -o wide
-  650  cp deployment.yaml live-http.yaml
-  651  vi live-http.yaml 
-  652  kubectl create -f live-http.yaml 
-  653  kubectl get pods
-  654  kubectl describe pod livhttp-65988c878-2vkqd
-  655  kubectl delete -f live-http.yaml
-  656  vi live-http.yaml 
-  657  kubectl create -f live-http.yaml 
-  658  kubectl get pods
-  659  kubectl describe pod livhttp-5f647bb675-9x7mx
-  660  kubectl get pods
-  661  kubectl get svc
-  662  kubectl describe svc mydep-svc
-  663  kubectl get svc
-  664  kubectl get pods
-  665  kubectl get pods -w 
-  666  kubectl get pods 
-  667  vi deployment.yaml 
-  668  vi live-http.yaml 
-  669  kubectl get pods 
-  670  kubectl get pods
-  671  kubectl delete -f live-http.yaml 
-  672  kubectl get pods 
-  673  kubectl delete -f daemonset.yaml 
-  674  kubectl get pods 
-  675  cp live-http.yaml live-exec.yaml
-  676  vi live-exec.yaml 
-  677  kubectl create -f live-exec.yaml 
-  678  kubectl get pods
-  679  kubectl describe po livhttp-54f4dfdc6f-79zbw 
-  680  kubectl delete -f live-exec.yaml 
-  681  vi live-exec.yaml 
-  682  cp live-http.yaml live-tcpsocket.yaml
-  683  vi live-tcpsocket.yaml 
-  684  ls
-  685  vi live-tcpsocket.yaml 
-  686  kubectl create -f live-tcpsocket.yaml 
-  687  kubectl get pods
-  688  kubectl describe pod livtcp-6667f4f976-2msql 
-  689  vi live-tcpsocket.yaml 
-  690  kubectl get pods
-  691  kubectl delete -f live-tcpsocket.yaml 
-  692  vi live-http.yaml 
-  693  kubectl create -f live-http.yaml 
-  694  kubectl get pods
-  695  kubectl get svc
-  696  kubectl describe svc mydep-svc 
-  697  kubectl get pods -o wide
-  698  kubectl describe pod livhttp-5cb64f4b5-97p6l
-  699  vi live-http.yaml 
-  700  git add .
-  701  git commit -m "health check" 
-  702  git push origin main 
-  703  init 0
-  704  cd myapp/
-  705  ls
-  706  cp deployment.yaml name-name.yaml
-  707  mv name-name.yaml node-name.yaml
-  708  vi node-name.yaml 
-  709  kubectl get nodes
-  710  vi node-name.yaml 
-  711  kubectl create -f node-name.yaml 
-  712  kubectl get pods -o wide
-  713  kubectl delete -f live-http.yaml 
-  714  kubectl get pods -o wide
-  715  cp pod.yaml node-pod.yaml
-  716  vi node-pod.yaml 
-  717  vi node-name.yaml 
-  718  vi node-pod.yaml 
-  719  kubectl create -f node-pod.yaml 
-  720  kubectl get pod -o wide
-  721  vi node-pod.yaml 
-  722  kubectl get nodes
-  723  kubectl delete -f node-pod.yaml 
-  724  kubectl delete po nodename-6bdd677f5b-78gwf 
-  725  kubectl delete -f node-name.yaml 
-  726  kubectl get nodes
-  727  kubectl get pods
-  728  vi node-pod.yaml 
-  729  kubectl create -f node-pod.yaml 
-  730  kubectl get pod -o wide
-  731  kubectl describe po nodepod 
-  732  vi node-pod.yaml 
-  733  kubectl delete -f node-pod.yaml 
-  734  kubectl get pods
-  735  kubectl get nodes
-  736  kubectl get nodes --show-labels 
-  737  kubectl label nodes node1 cpu=ryzen
-  738  kubectl get nodes --show-labels 
-  739  kubectl get nodes --show-labels | grep "cpu"
-  740  kubectl get nodes --show-labels | grep "cpu=ryzen"
-  741  kubectl label nodes node1 cpu-
-  742  kubectl get nodes --show-labels | grep "cpu=ryzen"
-  743  kubectl label nodes node1 cpu=ryzen
-  744  kubectl get nodes --show-labels | grep "cpu=ryzen"
-  745  kubectl get nodes -l cpu=ryzen
-  746  history 
-  747  cp node-pod.yaml node-selector.yaml
-  748  vi node-selector.yaml 
-  749  kubectl label nodes node1 cpu-
-  750  kubectl create -f node-selector.yaml 
-  751  kubectl get pods
-  752  kubectl describe pod nspod 
-  753  kubectl get pods
-  754  kubectl label nodes node1 cpu=ryzen
-  755  kubectl get pods -o wide
-  756  cp pod.yaml node-aff-pref.yaml
-  757  vi node-aff-pref.yaml 
-  758  kubectl create -f node-aff-pref.yaml 
-  759  kubectl get pod -o wide
-  760  kubectl delete -f node-aff-pref.yaml 
-  761  kubectl delete pod nspod 
-  762  kubectl label nodes node1 cpu-
-  763  kubectl create -f node-aff-pref.yaml 
-  764  kubectl get pod -o wide
-  765  kubectl describe pod affpref 
-  766  kubectl delete -f node-aff-pref.yaml 
-  767  vi node-aff-pref.yaml 
-  768  kubectl label nodes node1 cpu=ryzen
-  769  kubectl get pod --show-labels | grep "cpu"
-  770  kubectl get node --show-labels | grep "cpu"
-  771  vi node-aff-pref.yaml 
-  772  kubectl create -f node-aff-pref.yaml 
-  773  kubectl get pod -o wide
-  774  vi node-aff-pref.yaml 
-  775  cp node-aff-pref.yaml node-aff-req.yaml 
-  776  vi node-aff-req.yaml
-  777  kubectl create -f node-aff-req.yaml
-  778  vi node-aff-req.yaml
-  779  kubectl create -f node-aff-req.yaml
-  780  kubectl get pod -o wide
-  781  kubectl delete -f node-aff-req.yaml
-  782  kubectl delete -f node-aff-pref.yaml 
-  783  kubectl get pod -o wide
-  784  vi node-aff-req.yaml
-  785  kubectl create -f node-aff-req.yaml
-  786  kubectl get pod -o wide
-  787  kubectl get node --show-labels | grep "cpu"
-  788  kubectl delete -f node-aff-req.yaml
-  789  kubectl label nodes node1 cpu-
-  790  kubectl create -f node-aff-req.yaml
-  791  kubectl get pod
-  792  kubectl delete -f node-aff-req.yaml
-  793  vi node-aff-req.yaml
-  794  kubectl create -f node-aff-req.yaml
-  795  kubectl get pod
-  796  kubectl label nodes node1 cpu=ryzen
-  797  kubectl get pod
-  798  vi node-aff-req.yaml
-  799  vi pod.yaml 
-  800  kubectl create -f pod.yaml 
-  801  kubectl get pod -o wide
-  802  kubectl delete  pod affreq l
-  803  kubectl get pod -o wide
-  804  kubectl get pod --show-labels 
-  805  cp pod.yaml pod-aff-pref.yaml
-  806  vi pod-aff-pref.yaml 
-  807  kubectl get node --show-labels 
-  808  vi pod-aff-pref.yaml 
-  809  kubectl create -f pod-aff-pref.yaml 
-  810  kubectl get pod -o wide
-  811  kubectl delete -f pod-aff-pref.yaml 
-  812  vi pod-aff-pref.yaml 
-  813  kubectl create -f pod-aff-pref.yaml 
-  814  kubectl get pod -o wide
-  815  kubectl delete -f pod-aff-pref.yaml 
-  816  cp pod-aff-pref.yaml pod-aff-req.yaml
-  817  vi pod-aff-req.yaml
-  818  kubectl delete -f pod-aff-req.yaml 
-  819  kubectl get pod -o wide
-  820  vi pod-aff-req.yaml 
-  821  vi pod-aff-req.yaml
-  822  kubectl get pod -o wide
-  823  kubectl delete -f pod-aff-req.yaml -f pod.yaml 
-  824  kubectl get pod -o wide
-  825  vi pod-aff-req.yaml  
-  826  kubectl create -f pod-aff-req.yaml  
-  827  kubectl get pod -o wide
-  828  kubectl create -f pod.yaml 
-  829  kubectl get pod -o wide
-  830  kubectl delete -f pod-aff-req.yaml -f pod.yaml 
-  831  kubectl get nodes
-  832  kubectl describe nodes server | grep "Taint"
-  833  kubectl describe nodes server 
-  834  kubectl describe nodes node1 | grep "Taint"
-  835  kubectl taint node node1
-  836  kubectl create deployment test --image nginx --replicas 4
-  837  kubectl get pod -o wide
-  838  kubectl taint node node1 taint=green:NoExecute 
-  839  kubectl get pod -o wide
-  840  cp pod.yaml taint-tol.yaml
-  841  vi taint-tol.yaml 
-  842  kubectl create -f taint-tol.yaml 
-  843  kubectl get pod -o wide
-  844  kubectl get nodes
-  845  kubectl describe node server 
-  846  vi taint-tol.yaml 
-  847  git add .\
-  848  git add .
-  849  git commit -m "affinity"
-  850  git push origin main 
-  851  init 0
-  852  apt install fish
-  853  fish
-  854  ls
-  855  tar -xzvf k9s_Darwin_amd64.tar.gz 
-  856  ls
-  857  mv k9s /bin
-  858  rm README.md LICENSE 
-  859  ls
-  860  rm k9s_Darwin_amd64.tar.gz 
-  861  k9s 
-  862  ll /bin/k9s 
-  863  chown root:root /bin/k9s 
-  864  ll /bin/k9s 
-  865  k9s 
-  866  rm /bin/k9s 
-  867  wget https://github.com/derailed/k9s/releases/download/v0.32.5/k9s_Linux_amd64.tar.gz
-  868  ls
-  869  tar -xzvf k9s_Linux_amd64.tar.gz 
-  870  rm LICENSE README.md 
-  871  mv k9s /bin
-  872  ls
-  873  rm k9s_Linux_amd64.tar.gz 
-  874  ls
-  875  k9s 
-  876  kubectl get pods
-  877  kubectl run test --image nginx --port 80
-  878  kubectl get pods
-  879  kubectl get pod -o wide
-  880  curl http://10.0.0.21
-  881  kubectl get pod -o wide
-  882  kubectl expose pod test 
-  883  kubectl get svc
-  884  helm repo add hashicorp https://helm.releases.hashicorp.com
-  885  ls
-  886  cd vault/
-  887  ls
-  888  vi values.yaml 
-  889  helm install vault hashicorp/vault -f values.yaml
-  890  k get pods
-  891  kubectl get pods
-  892  kubectl delete deployments.apps hostvol 
-  893  kubectl get pods
-  894  kubectl delete pod test 
-  895  kubectl get pods
-  896  kubectl describe po vault-0 
-  897  helm uninstall vault
-  898  vi values.yaml 
-  899  kubectl get sc
-  900  vi values.yaml 
-  901  helm install vault hashicorp/vault -f values.yaml
-  902  kubectl get pod 
-  903  kubectl describe po vault-0 
-  904  kubectl get pvc
-  905  helm uninstall vault
-  906  kubectl get pvc
-  907  kubectl delete pvc data-vault-0 
-  908  kubectl delete pvc data-vault-1 
-  909  kubectl delete pvc data-vault-2
-  910  kubectl delete pvc myclaim 
-  911  kubectl get pvc
-  912  kubectl get pv
-  913  kubectl delete pv pvc-ca483d5a-dfdc-4f5e-9337-1dff8e641cc6
-  914  kubectl get pv
-  915  kubectl get pvc
-  916  helm install vault hashicorp/vault -f values.yaml
-  917  kubectl get pods
-  918  kubectl describe po vault-0 
-  919  helm uninstall vault
-  920  kubectl get pvc
-  921  kubectl describe pvc data-vault-0
-  922  kubectl delete pvc data-vault-0 data-vault-1 data-vault-2
-  923  vi values.yaml 
-  924  kubectl get sc
-  925  vi values.yaml 
-  926  helm install vault hashicorp/vault -f values.yaml
-  927  helm ls
-  928  k get pods
-  929  kubectl get pods
-  930  kubectl get pvc
-  931  kubectl get pods
-  932  kubectl exec -it vault-0 -- bash
-  933  kubectl exec -it vault-0 -- sh
-  934  kubectl get pods
-  935  kubectl describe pod vault-1 
-  936  kubectl get pods
-  937  kubectl scale sts vault --replicas 2
-  938  kubectl get pods
-  939  kubectl exec -it vault-0 -- sh
-  940  kubectl exec -it vault-1 -- sh
-  941  kubectl get svc
-  942  kubectl edit svc vault
-  943  kubectl get svc
-  944  kubectl exec vault-0 -- vault operator raft list-peers
- 1039  cd vault/
- 1040  ls
- 1041  helm install vault hashicorp/vault -f values.yaml
- 1042  helm uninstall vault
- 1043  cp values.yaml /tmp/
- 1044  vi values.yaml 
- 1045  vi /tmp/values.yaml 
- 1046  kubectl get pvc
- 1047  kubectl delete pvc data-vault-0 data-vault-1 data-vault-2
- 1048  helm install vault hashicorp/vault -f values.yaml
- 1049  kubectl get pods
- 1050  vi values.yaml 
- 1051  kubectl get pods
- 1052  vi ~/.bashrc 
- 1053  source ~/.bashrc 
- 1054  kubectl get pods
- 1055  kubectl exec -it vault-0 -- sh
- 1056  vi values.yaml 
- 1057  helm uninstall vault
- 1058  kubectl create ns vault
- 1059  helm install vault hashicorp/vault -f values.yaml -n -n vault
- 1060  helm install vault hashicorp/vault -f values.yaml -n vault
- 1061  vi values.yaml 
- 1062  kubectl get pods
- 1063  kubectl -n vault get pods 
- 1064  kubectl -n vault describe pod vault-0 
- 1065  helm -n vault uninstall vault
- 1066  k get pvc
- 1067  kubectl -n vault delete data-vault-0 data-vault-1 data-vault-2
- 1068  kubectl -n vault delete pvc data-vault-0 data-vault-1 data-vault-2
- 1069  k get pvc
- 1070  k get pvc -n vault
- 1071  kubectl  delete pvc data-vault-0 data-vault-1 data-vault-2
- 1072  k get pvc -n vault
- 1073  helm install vault hashicorp/vault -f values.yaml -n vault
- 1074  k get pvc -n vault
- 1075  k -n vault get pod
- 1076  kubectl -n vault describe pod vault-0 
- 1077  helm -n vault uninstall vault
- 1078  k -n vault get pod
- 1079  k -n vault get pvc
- 1080  kubectl -n vault delete pvc data-vault-0 data-vault-1 data-vault-2
- 1081  vi values.yaml 
- 1082  vi /tmp/values.yaml 
- 1083  vi values.yaml 
- 1084  helm install vault hashicorp/vault -f values.yaml -n vault
- 1085  k -n vault get pvc
- 1086  k -n vault get pods
- 1087  k -n vault get pvc
- 1088  k -n vault describe pvc data-vault-0
- 1089  vi values.yaml 
- 1090  helm -n vault uninstall vault
- 1091  helm install vault hashicorp/vault -f values.yaml -n vault
- 1092  k -n vault get pvc
- 1093  k -n vault get pods
- 1094  helm -n vault uninstall vault
- 1095  k -n vault get pvc
- 1096  k -n vault delete  pvc data-vault-0 data-vault-1
- 1097  k -n vault get pvc
- 1098  helm install vault hashicorp/vault -f values.yaml -n vault
- 1099  k -n vault get pvc
- 1100  k -n vault get pods
- 1101  helm -n vault uninstall vault
- 1102  k -n vault delete  pvc data-vault-0 data-vault-1
- 1103  vi values.yaml 
- 1104  helm install vault hashicorp/vault -f values.yaml -n vault
- 1105  k -n vault get pods
- 1106  vi values.yaml 
- 1107  k -n vault get pods
- 1108  k get ns
- 1109  k get secret -n fakeapp 
- 1260  cd
+ kubectl get hpa
+ 1392  kubectl describe hpa example-hpa
  1393  kubectl autoscale deployment test --min 1 --max 5 --cpu-percent 70
  1394  kubectl get hpa
  1395  kubectl delete hpa example-hpa test
- 1396  k delete deployments.apps  test 
+ 1396  k delete deployments.apps  test
  1397  init 0
- 1398  helm uninstall vault -n vault 
+ 1398  helm uninstall vault -n vault
  1399  helm ls -n vault
  1400  helm ls -n vault-secrets-operator-system
  1401  helm uninstall vault-secrets-operator -n vault-secrets-operator-system
@@ -526,54 +14,54 @@
  1404  kubectl get pods
  1405  kubectl delete po test-7955cf7657-b4cnj
  1406  kubectl get pods
- 1407  kubectl expose deployment test 
+ 1407  kubectl expose deployment test
  1408  kubectl expose deployment test --port 80
  1409  kubectl get svc
- 1410  kubectl delete svc test mydep-svc 
+ 1410  kubectl delete svc test mydep-svc
  1411  kubectl expose deployment test --port 80
  1412  kubectl get svc
  1413  cd myapp/
  1414  vi sts.yaml
- 1415  kubectl create -f sts.yaml 
+ 1415  kubectl create -f sts.yaml
  1416  kubectl get sts
  1417  kubectl get pod
  1418  kubectl delete pod web-1
  1419  kubectl get pod
- 1420  kubectl delete -f sts.yaml 
+ 1420  kubectl delete -f sts.yaml
  1421  kubectl get pod
- 1422  kubectl delete deployments.apps test 
+ 1422  kubectl delete deployments.apps test
  1423  vi sts.yaml
  1424  kubectl create -f sts.yaml
  1425  kubectl get sts
  1426  kubectl get pods
  1427  kubectl get svc
- 1428  kubectl run test --image nginx 
+ 1428  kubectl run test --image nginx
  1429  kubectl exec -it test -- bash
  1430  kubectl get pods -o wide
  1431  kubectl exec -it test -- bash
  1432  nslookup web-0.nginx.default.svc.cluster.local
  1433  kubectl get pods
- 1434  kubectl delete -f sts.yaml 
- 1435  vi sts.yaml 
- 1436  kubectl create -f sts.yaml 
+ 1434  kubectl delete -f sts.yaml
+ 1435  vi sts.yaml
+ 1436  kubectl create -f sts.yaml
  1437  kubectl get pods
  1438  kubectl get pvc
- 1439  kubectl describe pvc www-web-0 
+ 1439  kubectl describe pvc www-web-0
  1440  kubectl get pvc
- 1441  kubectl delete -f sts.yaml 
+ 1441  kubectl delete -f sts.yaml
  1442  kubectl get pvc
- 1443  kubectl delete pvc www-web-0 
- 1444  vi sts.yaml 
+ 1443  kubectl delete pvc www-web-0
+ 1444  vi sts.yaml
  1445  kubectl get sc
- 1446  vi sts.yaml 
- 1447  kubectl create -f sts.yaml 
- 1448  vi sts.yaml 
- 1449  kubectl create -f sts.yaml 
- 1450  vi sts.yaml 
- 1451  kubectl create -f sts.yaml 
- 1452  kubectl delete -f sts.yaml 
- 1453  vi sts.yaml 
- 1454  kubectl create -f sts.yaml 
+ 1446  vi sts.yaml
+ 1447  kubectl create -f sts.yaml
+ 1448  vi sts.yaml
+ 1449  kubectl create -f sts.yaml
+ 1450  vi sts.yaml
+ 1451  kubectl create -f sts.yaml
+ 1452  kubectl delete -f sts.yaml
+ 1453  vi sts.yaml
+ 1454  kubectl create -f sts.yaml
  1455  kubectl get pods
  1456  kubectl get pvc
  1457  kubectl get pods
@@ -584,41 +72,54 @@
  1462  kubectl get pvc
  1463  kubectl get pods
  1464  cp deployment.yaml init-con.yaml
- 1465  vi init-con.yaml 
- 1466  kubectl create -f init-con.yaml 
- 1467  vi init-con.yaml 
- 1468  kubectl create -f init-con.yaml 
+ 1465  vi init-con.yaml
+ 1466  kubectl create -f init-con.yaml
+ 1467  vi init-con.yaml
+ 1468  kubectl create -f init-con.yaml
  1469  kubectl get pods
- 1470  kubectl delete -f init-con.yaml 
- 1471  kubectl create -f init-con.yaml 
+ 1470  kubectl delete -f init-con.yaml
+ 1471  kubectl create -f init-con.yaml
  1472  kubectl get pods
  1473  kubectl get svc
  1474  kubectl get pod
  1475  kubectl describe po mydep-57bfd5676c-9xqsc
- 1476  kubectl get pods 
- 1477  kubectl delete deployments.apps mydep 
- 1478  kubectl delete -f sts.yaml 
- 1479  kubectl delete pod test 
- 1480  kubectl get pods 
+ 1476  kubectl get pods
+ 1477  kubectl delete deployments.apps mydep
+ 1478  kubectl delete -f sts.yaml
+ 1479  kubectl delete pod test
+ 1480  kubectl get pods
  1481  kubectl get svc
- 1482  kubectl delete svc test mydep-svc 
+ 1482  kubectl delete svc test mydep-svc
  1483  kubectl get svc
- 1484  kubectl run test --image nginx 
- 1485  kubectl describe po test 
- 1486  kubectl get pod -n kube-system 
+ 1484  kubectl run test --image nginx
+ 1485  kubectl describe po test
+ 1486  kubectl get pod -n kube-system
  1487  hostname
  1488  cd /etc/kubernetes/manifests/
  1489  ls
- 1490  vi etcd.yaml 
+ 1490  vi etcd.yaml
  1491  cd -
- 1492  vi pod.yaml 
+ 1492  vi pod.yaml
  1493  cp pod.yaml /etc/kubernetes/manifests/
  1494  kubectl get pods
- 1495  kubectl delete pod mypod-server 
+ 1495  kubectl delete pod mypod-server
  1496  kubectl get pods
  1497  cd /etc/kubernetes/manifests/
  1498  ls
- 1499  rm pod.yaml 
+ 1499  rm pod.yaml
  1500  kubectl get pods
  1501  cd
  1502  history > CMD-13-oct.txt
+ 1503  git add .
+ 1504  mv CMD-13-oct.txt myapp/
+ 1505  cd myapp/
+ 1506  git add .
+ 1507  git commit -m "statefulset"
+ 1508  git push origin main
+ 1509  vi CMD-13-oct.txt
+ 1510  git add .
+ 1511  git commit -m "statefulset"
+ 1512  git push origin main
+ 1513  rm CMD-13-oct.txt
+ 1514  history
+
