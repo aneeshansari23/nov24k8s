@@ -1,0 +1,42 @@
+    1  apt-get update
+    2  halt
+    3  FILE=/ks/wait-background.sh; while ! test -f ${FILE}; do clear; sleep 0.1; done; bash ${FILE}
+    4  kubectl create sa robo
+    5  kubectl delete sa robo 
+    6  kubectl create sa robo -n devops
+    7  kubectl create ns devops
+    8  kubectl create sa robo -n devops
+    9  kubectl -n devops get sa
+   10  kubectl -n devops create role robo-role --resource pod,deployment,configmap --verb create,delete,get,list --dry-run=client -o yaml
+   11  kubectl -n devops create role robo-role --resource pod,deployment,configmap --verb create,delete,get,list --dry-run=client -o yaml > role.yaml
+   12  kubectl -n devops create role robo-role --resource pod,deployment,configmap --verb create,delete,get,list 
+   13  kubectl -n devops get role
+   14  kubectl -n devops create rolebinding robo-rb --role robo-role --serviceaccount --help
+   15  kubectl -n devops create rolebinding robo-rb --role robo-role --serviceaccount devops:robo --dry-run=client -o yaml
+   16  kubectl -n devops create rolebinding robo-rb --role robo-role --serviceaccount devops:robo --dry-run=client -o yaml > rolebinding.yaml
+   17  kubectl -n devops create rolebinding robo-rb --role robo-role --serviceaccount devops:robo
+   18  kubectl -n devops get rolebindings.rbac.authorization.k8s.io 
+   19  kubectl get pod 
+   20  kubectl run test --image nginx 
+   21  kubectl get pod 
+   22  kubectl describe pod test 
+   23  kubectl get sa
+   24  kubectl get sa -n devops
+   25  kubectl run test --image nginx --dry-run=client -o yaml > pod.yaml
+   26  vi pod.yaml 
+   27  kubectl create -f pod.yaml 
+   28  kubectl -n devops describe pod test 
+   29  kubectl -n devops exec -it test -- bash
+   30  ls
+   31  vi role.yaml 
+   32  kubectl apply -f role.yaml 
+   33  kubectl -n devops exec -it test -- bash
+   34  history 
+   35  history > rbac-cmd.txt
+   36  kubectl -n devops auth can-i create pod --as devops:robo
+   37  kubectl -n devops auth can-i create pod --as --help
+   38  kubectl -n devops auth can-i create pod --help
+   39  kubectl -n devops auth can-i list pods --as=system:serviceaccount:devops:robo
+   40  kubectl -n devops auth can-i create pods --as=system:serviceaccount:devops:robo
+   41  kubectl -n devops auth can-i create daemonsets --as=system:serviceaccount:devops:robo
+   42  history > rbac-cmd.txt

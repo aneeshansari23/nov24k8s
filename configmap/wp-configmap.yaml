@@ -10,7 +10,7 @@ spec:
     image: wordpress:latest
     env: 
     - name: WORDPRESS_DB_HOST
-      valueFrom:
+       valueFrom:
         configMapKeyRef:
           name: wpenv
           key: WORDPRESS_DB_HOST

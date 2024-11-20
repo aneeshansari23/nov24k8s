@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: mypod
   labels:
-    app: green
+    run: test
+  name: test
+  namespace: devops
 spec:
+  serviceAccountName: robo
   containers:
-  - name: con1
-    image: nginx:latest
-    ports:
-    - containerPort: 80
+  - image: nginx
+    name: test

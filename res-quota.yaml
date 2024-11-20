@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata: 
+   name: devops-rq
+   namespace: devops
+spec:
+  hard:
+   requests.cpu: "1"
+   requests.memory: "1Gi"
+   limits.cpu: "2"
+   limits.memory: "2Gi"
+   count/configmaps: "5"
+   count/deployments: "3"
+   count/pods: "10"
