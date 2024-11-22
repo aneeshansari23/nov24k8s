@@ -1,0 +1,127 @@
+Kubernetes 1.28 upgrade to 1.29 +
+
+V1.28.3    Major.Minor.Patch
+
+check k8s version
+root@kubeverve:~# kubectl get nodes
+NAME     STATUS   ROLES           AGE     VERSION
+node1    Ready    <none>          4m34s   v1.28.10
+server   Ready    control-plane   8m1s    v1.28.10
+
+Check which version needs to upgrade  v1.28.10-00
+
+apt update
+apt-cache madison kubeadm
+update firt to last version of current version 
+root@kubeverve:~# apt-cache madison kubeadm
+   kubeadm | 1.28.10-1.1 | https://pkgs.k8s.io/core:/stable:/v1.28/deb  Packages
+   kubeadm | 1.28.9-2.1 | https://pkgs.k8s.io/core:/stable:/v1.28/deb  Packages
+   kubeadm | 1.28.8-1.1 | https://pkgs.k8s.io/core:/stable:/v1.28/deb  Packages
+   kubeadm | 1.28.7-1.1 | https://pkgs.k8s.io/core:/stable:/v1.28/deb  Packages
+
+## add latest repo for version v1.29 here...
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+sudo echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+
+root@kubeverve:~# apt-cache madison kubeadm
+   kubeadm | 1.29.5-1.1 | https://pkgs.k8s.io/core:/stable:/v1.29/deb  Packages
+   kubeadm | 1.29.4-2.1 | https://pkgs.k8s.io/core:/stable:/v1.29/deb  Packages
+   kubeadm | 1.29.3-1.1 | https://pkgs.k8s.io/core:/stable:/v1.29/deb  Packages
+   kubeadm | 1.29.2-1.1 | https://pkgs.k8s.io/core:/stable:/v1.29/deb  Packages
+   kubeadm | 1.29.1-1.1 | https://pkgs.k8s.io/core:/stable:/v1.29/deb  Packages
+   kubeadm | 1.29.0-1.1 | https://pkgs.k8s.io/core:/stable:/v1.29/deb  Packages
+
+
+select version 
+
+apt-mark unhold kubeadm && \
+apt-get update && apt-get install -y kubeadm=1.29.0-1.1 && \
+apt-mark hold kubeadm
+
+root@kubeverve:~# kubeadm version
+kubeadm version: &version.Info{Major:"1", Minor:"29", GitVersion:"v1.29.0", GitCommit:"3f7a50f38688eb332e2a1b013678c6435d539ae6", GitTreeState:"clean", BuildDate:"2023-12-13T08:50:10Z", GoVersion:"go1.21.5", Compiler:"gc", Platform:"linux/amd64"}
+
+
+
+## Upgrade to the latest stable version:
+
+COMPONENT                 CURRENT    TARGET
+kube-apiserver            v1.28.10   v1.29.5
+kube-controller-manager   v1.28.10   v1.29.5
+kube-scheduler            v1.28.10   v1.29.5
+kube-proxy                v1.28.10   v1.29.5
+CoreDNS                   v1.10.1    v1.11.1
+etcd                      3.5.12-0   3.5.10-0
+
+You can now apply the upgrade by executing the following command:
+
+   >>>>>>     kubeadm upgrade apply v1.29.5
+
+
+update kubeadm to this version v1.29.5
+
+apt-mark unhold kubeadm && \
+apt-get update && apt-get install -y kubeadm=1.29.5-1.1 && \
+apt-mark hold kubeadm
+
+
+kubeadm upgrade apply v1.29.5
+
+
+## Update kubelet now
+apt-get update && apt-get install -y kubelet=1.29.5-1.1
+
+
+systemctl daemon-reload
+systemctl restart kubelet
+
+
+apt-mark unhold kubeadm && \
+apt-get update && apt-get install -y kubeadm=1.29.5-1.1 && \
+apt-mark hold kubeadm
+
+
+#######################  Worker Node Upgrade ###################
+
+Drain the node
+Upgrade kubeadm on the node
+Upgrade the kubelet configuration (kubeadm upgrade node)
+Upgrade kubelet & kubectl
+Uncordon the node
+
+
+
+Drain the  node1 from master node :
+kubectl drain node1 --ignore-daemonsets --delete-local-data
+
+run following commands in worker node node1
+apt-mark unhold kubeadm && \
+apt-get update && apt-get install -y kubeadm=1.29.5-1.1 && \
+apt-mark hold kubeadm
+
+root@node1:~# kubeadm upgrade node
+
+
+apt-mark unhold kubelet kubectl && \
+apt-get update && apt-get install -y kubelet=1.29.5-1.1 kubectl=1.29.5-1.1 && \
+apt-mark hold kubelet kubectl
+
+
+systemctl daemon-reload
+systemctl restart kubelet
+
+
+uncordon node1 from master node 
+kubectl uncordon node1
+
+root@master:~# kubectl get nodes
+NAME     STATUS                     ROLES           AGE   VERSION
+master   Ready                      control-plane   30m   v1.26.4
+node1    Ready,SchedulingDisabled   <none>          28m   v1.26.4
+node2    Ready                      <none>          27m   v1.25.0
+root@master:~#
+
+
+
+

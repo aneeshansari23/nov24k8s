@@ -2,7 +2,7 @@
 replicacount: 2
 
 con1:
-   image: httpd:latest
+   image: nginx:latest
    port: 80
 service:
   enabled: false
